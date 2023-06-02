@@ -48,6 +48,9 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
                 finishAffinity()
             }
+            R.id.menu_maps -> {
+                startActivity(Intent(this@MainActivity, MapsActivity::class.java))
+            }
         }
         return true
     }

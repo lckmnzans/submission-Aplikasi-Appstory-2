@@ -7,6 +7,7 @@
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="register">Register</string>
+    <string name="maps">Map</string>
     <string name="add_content">Add content</string>
     <string name="user_avatar">User photo</string>
     <string name="user_name">User name</string>
@@ -22,4 +23,5 @@
     <string name="pass_is_invalid">Password belum sesuai</string>
     <string name="pass_is_valid">Password sudah sesuai</string>
     <string name="email_is_invalid">Email belum sesuai</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
