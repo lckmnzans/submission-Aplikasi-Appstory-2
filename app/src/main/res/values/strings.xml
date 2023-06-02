@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">AppStory</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="register">Register</string>
+    <string name="add_content">Add content</string>
+    <string name="user_avatar">User photo</string>
+    <string name="user_name">User name</string>
+    <string name="user_desc">Story Description</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="upload">Unggah</string>
+
+    <string name="reg_is_success">Register sukses. Silahkan anda bisa login</string>
+    <string name="reg_is_fail">Register gagal. Silahkan coba lagi atau sesuaikan email anda dengan email lain.</string>
+    <string name="log_is_fail">Login gagal. Silahkan coba lagi atau sesuaikan email atau password anda.</string>
+    <string name="pass_is_invalid">Password belum sesuai</string>
+    <string name="pass_is_valid">Password sudah sesuai</string>
+    <string name="email_is_invalid">Email belum sesuai</string>
+</resources>
