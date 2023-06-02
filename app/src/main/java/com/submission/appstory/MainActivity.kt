@@ -4,21 +4,25 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.appstory.databinding.ActivityMainBinding
+import com.submission.appstory.paging.adapter.StoryListAdapter
 import com.submission.appstory.response.StoryItem
 import com.submission.appstory.stories.Story
 import com.submission.appstory.stories.StoryAdapter
 import com.submission.appstory.viewModel.MainViewModel
+import com.submission.appstory.viewModel.ViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,10 +31,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.rvStories.layoutManager = LinearLayoutManager(this)
+        getData()
+        /*
         val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
         viewModel.getStories(token.toString())
         viewModel.isLoading.observe(this) {isLoading -> showLoading(isLoading)}
         viewModel.listStory.observe(this) {listStory -> setUserStories(listStory)}
+        */
 
         binding.fabAddStory.setOnClickListener {
             val intent = Intent(this, AddActivity::class.java)
@@ -74,11 +81,20 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {
             binding.loadMain.visibility = View.VISIBLE
         } else {
             binding.loadMain.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun getData() {
+        val adapter = StoryListAdapter()
+        binding.rvStories.adapter = adapter
+        viewModel.story.observe(this) {
+            adapter.submitData(lifecycle, it)
         }
     }
 }

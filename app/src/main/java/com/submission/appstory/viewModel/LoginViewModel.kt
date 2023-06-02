@@ -22,7 +22,7 @@ class LoginViewModel: ViewModel() {
 
     fun loginUser(email: String, password: String) {
         _isLoading.value = true
-        val call = ApiConfig.getApiService("").login(email, password)
+        val call = ApiConfig.getApiService().login(email, password)
         call.enqueue(object: Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 _isLoading.value = false
@@ -32,7 +32,8 @@ class LoginViewModel: ViewModel() {
                         val token = responseBody.loginResult?.token
                         Log.d(TAG, "Token: $token")
                         _isSuccess.value = true
-                        _token.value = token
+                        _token.value = token.toString()
+                        MainViewModel.TOKEN = token.toString()
                     }
                 } else {
                     Log.e(TAG, "onResponse: ${response.body()?.message ?: "Login gagal"}")

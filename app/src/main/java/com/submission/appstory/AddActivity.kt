@@ -135,7 +135,7 @@ class AddActivity : AppCompatActivity() {
                 Toast.makeText(this@AddActivity, "Silahkan tambahkan deskripsi terlebih dahulu", Toast.LENGTH_SHORT).show()
             } else {
                 showLoading(true)
-                val call = ApiConfig.getApiService(token.toString()).addStory(imageMultipart, description)
+                val call = ApiConfig.getApiService().addStory(imageMultipart, description)
                 call.enqueue(object: Callback<AddStoryResponse> {
                     override fun onResponse(
                         call: Call<AddStoryResponse>,

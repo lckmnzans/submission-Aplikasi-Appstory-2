@@ -17,7 +17,7 @@ class RegisterViewModel: ViewModel() {
 
     fun registerUser(name: String, email: String, password: String) {
         val regRequest = RegisterRequest(name, email, password)
-        val call = ApiConfig.getApiService("").register(regRequest)
+        val call = ApiConfig.getApiService().register(regRequest)
         call.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(
                 call: Call<RegisterResponse>,

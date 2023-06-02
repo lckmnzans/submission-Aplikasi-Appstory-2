@@ -16,7 +16,7 @@ import androidx.core.util.Pair
 import androidx.lifecycle.ViewModelProvider
 import com.submission.appstory.databinding.ActivityLoginBinding
 import com.submission.appstory.viewModel.LoginViewModel
-import kotlin.time.toDuration
+import com.submission.appstory.viewModel.MainViewModel
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -75,7 +75,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         val isLoggedIn = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getBoolean("isLoggedIn", false)
+        val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
         if (isLoggedIn) {
+            MainViewModel.TOKEN
             toMainActivity()
         }
     }
