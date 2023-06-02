@@ -1,6 +1,5 @@
 package com.submission.appstory.api
 
-import androidx.viewbinding.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -9,15 +8,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ApiConfig {
     companion object {
         const val BASE_URL = com.submission.appstory.BuildConfig.BASE_URL
-        var TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLVFMeUl3VUtJUzJCOHpGZU8iLCJpYXQiOjE2ODU3MTgwMTZ9.ap5AkEi30HxcsUKHjJiOjz1yWaJ_iUKEVYP39K0o7B0"
-        fun getApiService(): ApiService {
+        fun getApiService(token: String): ApiService {
             val loggingInterceptor =
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder()
                 .addInterceptor { chain ->
                     val originalRequest = chain.request()
                     val requestBuilder = originalRequest.newBuilder()
-                        .header("Authorization", "Bearer $TOKEN")
+                        .header("Authorization", "Bearer $token")
                         .method(originalRequest.method, originalRequest.body)
                     val request = requestBuilder.build()
                     chain.proceed(request)

@@ -14,6 +14,9 @@ import java.util.*
 
 private const val FILENAME_FORMAT = "dd-MMM-yyyy"
 private const val MAXIMAL_SIZE = 1000000
+fun getToken(context: Context): String {
+    return context.getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token","").toString()
+}
 
 val timeStamp: String = SimpleDateFormat(
     FILENAME_FORMAT,

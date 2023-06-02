@@ -130,12 +130,12 @@ class AddActivity : AppCompatActivity() {
                 file.name,
                 requestImageFile
             )
-            val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "")
+            val token = getSharedPreferences("LoginSession", Context.MODE_PRIVATE).getString("token", "").toString()
             if (binding.edAddDescription.text.isNullOrEmpty()) {
                 Toast.makeText(this@AddActivity, "Silahkan tambahkan deskripsi terlebih dahulu", Toast.LENGTH_SHORT).show()
             } else {
                 showLoading(true)
-                val call = ApiConfig.getApiService().addStory(imageMultipart, description)
+                val call = ApiConfig.getApiService(token).addStory(imageMultipart, description)
                 call.enqueue(object: Callback<AddStoryResponse> {
                     override fun onResponse(
                         call: Call<AddStoryResponse>,

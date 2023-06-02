@@ -8,8 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.submission.appstory.databinding.ItemStoriesBinding
 import com.submission.appstory.response.StoryItem
+import com.submission.appstory.stories.Story
 
 class StoryListAdapter: PagingDataAdapter<StoryItem, StoryListAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: Story)
+    }
+
     class MyViewHolder(private val binding: ItemStoriesBinding): RecyclerView.ViewHolder(binding.root) {
         val ivPhoto = binding.ivItemPhoto
         val tvStory = binding.tvItemName
@@ -23,12 +30,20 @@ class StoryListAdapter: PagingDataAdapter<StoryItem, StoryListAdapter.MyViewHold
         val data = getItem(position)
         if (data != null) {
             holder.bind(data)
+            val dataItem = Story(data.id, data.name, data.photoUrl, data.description)
+            holder.itemView.setOnClickListener {
+                onItemClickCallback.onItemClicked(dataItem)
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemStoriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
+    }
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
     }
 
     companion object {
