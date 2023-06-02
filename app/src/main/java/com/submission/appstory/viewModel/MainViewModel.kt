@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.submission.appstory.api.ApiConfig
-import com.submission.appstory.response.ListStoryItem
 import com.submission.appstory.response.StoriesResponse
+import com.submission.appstory.response.StoryItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,8 +15,8 @@ class MainViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _listStory = MutableLiveData<List<ListStoryItem>>()
-    val listStory: LiveData<List<ListStoryItem>> = _listStory
+    private val _listStory = MutableLiveData<List<StoryItem>>()
+    val listStory: LiveData<List<StoryItem>> = _listStory
 
     fun getStories(token: String) {
         _isLoading.value = true

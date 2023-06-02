@@ -10,7 +10,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.appstory.databinding.ActivityMainBinding
-import com.submission.appstory.response.ListStoryItem
+import com.submission.appstory.response.StoryItem
 import com.submission.appstory.stories.Story
 import com.submission.appstory.stories.StoryAdapter
 import com.submission.appstory.viewModel.MainViewModel
@@ -55,10 +55,10 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private fun setUserStories(stories: List<ListStoryItem>) {
+    private fun setUserStories(stories: List<StoryItem>) {
         val list = ArrayList<Story>()
         for (story in stories) {
-            val storyData = Story(story.id.toString(), story.name.toString(), story.photoUrl.toString(), story.description.toString())
+            val storyData = Story(story.id, story.name.toString(), story.photoUrl.toString(), story.description.toString())
             list.add(storyData)
         }
 

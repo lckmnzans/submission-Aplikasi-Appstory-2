@@ -1,11 +1,13 @@
 package com.submission.appstory.response
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class StoriesResponse(
 
 	@field:SerializedName("listStory")
-	val listStory: List<ListStoryItem>,
+	val listStory: List<StoryItem>,
 
 	@field:SerializedName("error")
 	val error: Boolean,
@@ -14,25 +16,27 @@ data class StoriesResponse(
 	val message: String
 )
 
-data class ListStoryItem(
+@Entity(tableName = "story")
+data class StoryItem(
 
 	@field:SerializedName("photoUrl")
-	val photoUrl: String? = null,
+	val photoUrl: String,
 
 	@field:SerializedName("createdAt")
-	val createdAt: String? = null,
+	val createdAt: String,
 
 	@field:SerializedName("name")
-	val name: String? = null,
+	val name: String,
 
 	@field:SerializedName("description")
-	val description: String? = null,
+	val description: String,
 
 	@field:SerializedName("lon")
 	val lon: Any,
 
+	@PrimaryKey
 	@field:SerializedName("id")
-	val id: String? = null,
+	val id: String,
 
 	@field:SerializedName("lat")
 	val lat: Any
