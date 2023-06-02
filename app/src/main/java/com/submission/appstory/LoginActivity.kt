@@ -16,6 +16,7 @@ import androidx.core.util.Pair
 import androidx.lifecycle.ViewModelProvider
 import com.submission.appstory.databinding.ActivityLoginBinding
 import com.submission.appstory.viewModel.LoginViewModel
+import kotlin.time.toDuration
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -44,7 +45,9 @@ class LoginActivity : AppCompatActivity() {
 
         })
         binding.edLoginPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (binding.edLoginPassword.alertCode == 1) {
@@ -116,6 +119,7 @@ class LoginActivity : AppCompatActivity() {
     private fun showLoginResponse(isSuccess: Boolean) {
         if (isSuccess) {
             Toast.makeText(this@LoginActivity, "Login sukses", Toast.LENGTH_SHORT).show()
+            binding.tvPasswordAlert.visibility = View.INVISIBLE
             toMainActivity()
         } else {
             binding.tvPasswordAlert.visibility = View.VISIBLE
