@@ -7,6 +7,7 @@ import com.submission.appstory.paging.data.StoryRepository
 import com.submission.appstory.response.StoryItem
 
 class MainViewModel(storyRepository: StoryRepository): ViewModel() {
+
     val story: LiveData<PagingData<StoryItem>> =
         storyRepository.getStory().cachedIn(viewModelScope)
 

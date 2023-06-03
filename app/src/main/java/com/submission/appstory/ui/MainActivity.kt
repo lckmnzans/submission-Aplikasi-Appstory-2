@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.rvStories.layoutManager = LinearLayoutManager(this)
+
         getData()
 
         binding.fabAddStory.setOnClickListener {
