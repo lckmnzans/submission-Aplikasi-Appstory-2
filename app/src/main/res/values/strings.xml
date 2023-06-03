@@ -16,6 +16,7 @@
     <string name="gallery">Galeri</string>
     <string name="upload">Unggah</string>
     <string name="retry">Coba lagi</string>
+    <string name="your_story">Cerita anda...</string>
 
     <string name="reg_is_success">Register sukses. Silahkan anda bisa login</string>
     <string name="reg_is_fail">Register gagal. Silahkan coba lagi atau sesuaikan email anda dengan email lain.</string>
