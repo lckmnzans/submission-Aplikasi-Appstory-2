@@ -1,4 +1,4 @@
-package com.submission.appstory
+package com.submission.appstory.ui
 
 import android.animation.ObjectAnimator
 import android.app.Activity
@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.lifecycle.ViewModelProvider
+import com.submission.appstory.R
 import com.submission.appstory.databinding.ActivityLoginBinding
 import com.submission.appstory.viewModel.LoginViewModel
 

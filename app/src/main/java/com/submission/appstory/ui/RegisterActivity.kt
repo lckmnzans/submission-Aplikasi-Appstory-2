@@ -1,4 +1,4 @@
-package com.submission.appstory
+package com.submission.appstory.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.submission.appstory.R
 import com.submission.appstory.databinding.ActivityRegisterBinding
 import com.submission.appstory.viewModel.RegisterViewModel
 

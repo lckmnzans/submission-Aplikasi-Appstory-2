@@ -1,4 +1,4 @@
-package com.submission.appstory.stories
+package com.submission.appstory
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

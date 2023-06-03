@@ -1,7 +1,6 @@
 package com.submission.appstory.paging.dbInjection
 
 import android.content.Context
-import android.util.Log
 import com.submission.appstory.api.ApiConfig
 import com.submission.appstory.getToken
 import com.submission.appstory.paging.data.StoryRepository

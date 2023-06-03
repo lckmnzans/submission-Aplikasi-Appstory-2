@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.submission.appstory.databinding.ItemStoriesBinding
 import com.submission.appstory.response.StoryItem
-import com.submission.appstory.stories.Story
+import com.submission.appstory.Story
 
 class StoryListAdapter: PagingDataAdapter<StoryItem, StoryListAdapter.MyViewHolder>(DIFF_CALLBACK) {
     private lateinit var onItemClickCallback: OnItemClickCallback

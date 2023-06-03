@@ -1,11 +1,11 @@
-package com.submission.appstory
+package com.submission.appstory.ui
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.submission.appstory.databinding.ActivityDetailBinding
-import com.submission.appstory.stories.Story
+import com.submission.appstory.Story
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding

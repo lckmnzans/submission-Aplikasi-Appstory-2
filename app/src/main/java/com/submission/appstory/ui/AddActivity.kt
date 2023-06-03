@@ -1,4 +1,4 @@
-package com.submission.appstory
+package com.submission.appstory.ui
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -17,7 +17,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.submission.appstory.api.ApiConfig
 import com.submission.appstory.databinding.ActivityAddBinding
+import com.submission.appstory.reduceFileImage
 import com.submission.appstory.response.AddStoryResponse
+import com.submission.appstory.uriToFile
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody

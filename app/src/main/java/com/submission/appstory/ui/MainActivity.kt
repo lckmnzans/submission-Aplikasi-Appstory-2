@@ -1,21 +1,20 @@
-package com.submission.appstory
+package com.submission.appstory.ui
 
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.submission.appstory.R
 import com.submission.appstory.databinding.ActivityMainBinding
 import com.submission.appstory.paging.adapter.LoadingStateAdapter
 import com.submission.appstory.paging.adapter.StoryListAdapter
-import com.submission.appstory.stories.Story
+import com.submission.appstory.Story
 import com.submission.appstory.viewModel.MainViewModel
 import com.submission.appstory.viewModel.ViewModelFactory
-import kotlinx.coroutines.flow.collect
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -45,13 +44,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.menu_maps -> {
+                val intent = Intent(this@MainActivity, MapsActivity::class.java)
+                intent.putExtra("origin", "FromActionBar")
+                startActivity(intent)
+            }
             R.id.menu_setting -> {
                 getSharedPreferences("LoginSession", Context.MODE_PRIVATE).edit().clear().apply()
-                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                startActivity(intent)
                 finishAffinity()
-            }
-            R.id.menu_maps -> {
-                startActivity(Intent(this@MainActivity, MapsActivity::class.java))
             }
         }
         return true
@@ -71,14 +73,14 @@ class MainActivity : AppCompatActivity() {
 
         adapter.setOnItemClickCallback(object: StoryListAdapter.OnItemClickCallback{
             override fun onItemClicked(data: Story) {
-                val storyDetail = Story(data.id, data.userName, data.avtUrl, data.desc, data.lat, data.lon)
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra(DetailActivity.EXTRA_STORY, storyDetail)
+                intent.putExtra(DetailActivity.EXTRA_STORY, data)
                 startActivity(intent)
             }
 
             override fun onItemMapsClicked(data: Story) {
                 val intent = Intent(this@MainActivity, MapsActivity::class.java)
+                intent.putExtra("origin", "FromListStory")
                 intent.putExtra(MapsActivity.EXTRA_STORY, data)
                 startActivity(intent)
             }

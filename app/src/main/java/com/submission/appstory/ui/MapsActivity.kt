@@ -1,27 +1,37 @@
-package com.submission.appstory
+package com.submission.appstory.ui
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
+import android.util.Log
+import android.view.MenuItem
+import androidx.activity.viewModels
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.submission.appstory.R
 import com.submission.appstory.databinding.ActivityMapsBinding
-import com.submission.appstory.stories.Story
+import com.submission.appstory.Story
+import com.submission.appstory.viewModel.MapsViewModel
+import com.submission.appstory.viewModel.ViewModelFactory
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    private val viewModel: MapsViewModel by viewModels {
+        ViewModelFactory(this)
+    }
 
     companion object {
         const val EXTRA_STORY = "extra_story"
-        var LAT = 1.0
-        var LON = 1.0
+        private var ORIGIN = "origin"
+        private var NAME = "name"
+        private var LAT = 1.0
+        private var LON = 1.0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,13 +40,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        ORIGIN = intent.getStringExtra("origin").toString()
         val story = getParceableData()
         if (story != null) {
+            NAME = story.userName.toString()
             LAT = story.lat?.toDouble() ?: 0.0
             LON = story.lon?.toDouble() ?: 0.0
         }
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -54,15 +67,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(LAT, LON)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in _"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        if (ORIGIN == "FromActionBar") {
+            viewModel.listStories.observe(this) { listStories ->
+                for (storyItem in listStories) {
+                    setMarker(storyItem.lat.toDouble(), storyItem.lon.toDouble(), storyItem.name)
+                }
+            }
+        } else if (ORIGIN == "FromListStory") {
+            setMarker(LAT, LON, NAME)
+        }
+
 
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isIndoorLevelPickerEnabled = true
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun getParceableData(): Story? {
@@ -72,5 +98,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             @Suppress("DEPRECATED")
             return intent.getParcelableExtra(EXTRA_STORY)
         }
+    }
+
+    private fun setMarker(lat: Double, lon: Double, title: String) {
+        val loc = LatLng(lat, lon)
+        mMap.addMarker(MarkerOptions().position(loc).title(title))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc))
     }
 }
