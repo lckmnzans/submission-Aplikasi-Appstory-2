@@ -1,6 +1,7 @@
 package com.submission.appstory.paging.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -15,14 +16,21 @@ class StoryListAdapter: PagingDataAdapter<StoryItem, StoryListAdapter.MyViewHold
 
     interface OnItemClickCallback {
         fun onItemClicked(data: Story)
+        fun onItemMapsClicked(data: Story)
     }
 
     class MyViewHolder(private val binding: ItemStoriesBinding): RecyclerView.ViewHolder(binding.root) {
         val ivPhoto = binding.ivItemPhoto
         val tvStory = binding.tvItemName
+        val ivLoc = binding.ivMapsAvailability
         fun bind(data: StoryItem) {
             this.tvStory.text = data.name
             Glide.with(this.itemView.context).load(data.photoUrl).into(this.ivPhoto)
+            if (!data.lon.isNullOrEmpty() && !data.lat.isNullOrEmpty()) {
+                ivLoc.visibility = View.VISIBLE
+            } else {
+                ivLoc.visibility = View.GONE
+            }
         }
     }
 
@@ -30,9 +38,12 @@ class StoryListAdapter: PagingDataAdapter<StoryItem, StoryListAdapter.MyViewHold
         val data = getItem(position)
         if (data != null) {
             holder.bind(data)
-            val dataItem = Story(data.id, data.name, data.photoUrl, data.description)
+            val dataItem = Story(data.id, data.name, data.photoUrl, data.description, data.lat, data.lon)
             holder.itemView.setOnClickListener {
                 onItemClickCallback.onItemClicked(dataItem)
+            }
+            holder.ivLoc.setOnClickListener {
+                onItemClickCallback.onItemMapsClicked(dataItem)
             }
         }
     }

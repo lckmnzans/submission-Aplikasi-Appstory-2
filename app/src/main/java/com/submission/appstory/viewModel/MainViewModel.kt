@@ -8,6 +8,7 @@ import com.submission.appstory.getToken
 import com.submission.appstory.paging.data.StoryRepository
 import com.submission.appstory.paging.dbInjection.Injection
 import com.submission.appstory.response.StoryItem
+import kotlinx.coroutines.flow.Flow
 
 class MainViewModel(storyRepository: StoryRepository): ViewModel() {
     val story: LiveData<PagingData<StoryItem>> =

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -14,6 +15,7 @@ import com.submission.appstory.paging.adapter.StoryListAdapter
 import com.submission.appstory.stories.Story
 import com.submission.appstory.viewModel.MainViewModel
 import com.submission.appstory.viewModel.ViewModelFactory
+import kotlinx.coroutines.flow.collect
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -66,11 +68,18 @@ class MainActivity : AppCompatActivity() {
         viewModel.story.observe(this) {
             adapter.submitData(lifecycle, it)
         }
+
         adapter.setOnItemClickCallback(object: StoryListAdapter.OnItemClickCallback{
             override fun onItemClicked(data: Story) {
-                val storyDetail = Story(data.id, data.userName, data.avtUrl, data.desc)
+                val storyDetail = Story(data.id, data.userName, data.avtUrl, data.desc, data.lat, data.lon)
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
                 intent.putExtra(DetailActivity.EXTRA_STORY, storyDetail)
+                startActivity(intent)
+            }
+
+            override fun onItemMapsClicked(data: Story) {
+                val intent = Intent(this@MainActivity, MapsActivity::class.java)
+                intent.putExtra(MapsActivity.EXTRA_STORY, data)
                 startActivity(intent)
             }
         })
