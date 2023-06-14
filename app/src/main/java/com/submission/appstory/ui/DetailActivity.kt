@@ -19,7 +19,7 @@ class DetailActivity : AppCompatActivity() {
 
         supportActionBar!!.hide()
 
-        val story = getParceableData()
+        val story = getParcelableData()
         if (story != null) {
             setStoryDetail(story)
         }
@@ -30,12 +30,13 @@ class DetailActivity : AppCompatActivity() {
         binding.tvUserName.text = story.userName
         binding.tvUserDesc.text = story.desc
     }
-    private fun getParceableData(): Story? {
-        if (Build.VERSION.SDK_INT >= 33) {
-            return intent.getParcelableExtra(EXTRA_STORY, Story::class.java)
+
+    @Suppress("DEPRECATION")
+    private fun getParcelableData(): Story? {
+        return if (Build.VERSION.SDK_INT >= 33) {
+            intent.getParcelableExtra(EXTRA_STORY, Story::class.java)
         } else {
-            @Suppress("DEPRECATED")
-            return intent.getParcelableExtra(EXTRA_STORY)
+            intent.getParcelableExtra(EXTRA_STORY)
         }
     }
 }

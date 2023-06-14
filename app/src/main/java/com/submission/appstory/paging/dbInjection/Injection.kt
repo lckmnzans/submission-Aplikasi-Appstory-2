@@ -10,6 +10,6 @@ object Injection {
     fun provideRepository(context: Context): StoryRepository {
         val database = StoryDatabase.getDatabase(context)
         val apiService = ApiConfig.getApiService(getToken(context))
-        return StoryRepository(database, apiService)
+        return StoryRepository(apiService)
     }
 }

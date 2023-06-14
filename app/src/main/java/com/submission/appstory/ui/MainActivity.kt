@@ -68,8 +68,8 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        viewModel.story.observe(this) {
-            adapter.submitData(lifecycle, it)
+        viewModel.story.observe(this) { pagingData ->
+            adapter.submitData(lifecycle, pagingData)
         }
 
         adapter.setOnItemClickCallback(object: StoryListAdapter.OnItemClickCallback{

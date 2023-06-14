@@ -9,7 +9,7 @@ import com.submission.appstory.response.StoryItem
 class MainViewModel(storyRepository: StoryRepository): ViewModel() {
 
     val story: LiveData<PagingData<StoryItem>> =
-        storyRepository.getStory().cachedIn(viewModelScope)
+        storyRepository.getStory().cachedIn(viewModelScope).asLiveData()
 
     companion object {
         private const val TAG = "MainActivity"

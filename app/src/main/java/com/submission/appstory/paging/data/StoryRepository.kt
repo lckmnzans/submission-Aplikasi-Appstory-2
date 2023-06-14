@@ -2,16 +2,15 @@ package com.submission.appstory.paging.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.liveData
+import androidx.paging.*
 import com.submission.appstory.api.ApiService
 import com.submission.appstory.paging.database.StoryDatabase
 import com.submission.appstory.response.StoryItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 
-class StoryRepository(private val storyDatabase: StoryDatabase, private val apiService: ApiService) {
-    fun getStory(): LiveData<PagingData<StoryItem>> {
+class StoryRepository(private val apiService: ApiService) {
+    fun getStory(): Flow<PagingData<StoryItem>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 5
@@ -19,6 +18,6 @@ class StoryRepository(private val storyDatabase: StoryDatabase, private val apiS
             pagingSourceFactory = {
                 StoryPagingSource(apiService)
             }
-        ).liveData
+        ).flow
     }
 }
