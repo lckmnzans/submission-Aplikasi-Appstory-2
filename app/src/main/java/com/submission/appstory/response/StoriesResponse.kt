@@ -16,7 +16,6 @@ data class StoriesResponse(
 	val message: String
 )
 
-@Entity(tableName = "story")
 data class StoryItem(
 
 	@field:SerializedName("photoUrl")
@@ -34,7 +33,6 @@ data class StoryItem(
 	@field:SerializedName("lon")
 	val lon: String,
 
-	@PrimaryKey
 	@field:SerializedName("id")
 	val id: String,
 

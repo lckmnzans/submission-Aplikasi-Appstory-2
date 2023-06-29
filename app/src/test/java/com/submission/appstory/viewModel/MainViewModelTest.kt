@@ -2,6 +2,7 @@ package com.submission.appstory.viewModel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asFlow
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.ListUpdateCallback
@@ -9,6 +10,7 @@ import com.submission.appstory.utils.MainCoroutineRule
 import com.submission.appstory.utils.PagingDataTestSource
 import com.submission.appstory.utils.getOrAwaitValue
 import com.submission.appstory.paging.adapter.StoryListAdapter
+import com.submission.appstory.paging.data.StoryRepository
 import com.submission.appstory.response.StoryItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -32,6 +34,8 @@ class MainViewModelTest {
     var mainCoroutineRules = MainCoroutineRule()
 
     @Mock
+    private lateinit var storyRepository: StoryRepository
+
     private lateinit var mainViewModel: MainViewModel
 
     @Test
@@ -41,7 +45,9 @@ class MainViewModelTest {
         val expectedStory = MutableLiveData<PagingData<StoryItem>>()
         expectedStory.value = dummyData
 
-        `when`(mainViewModel.story).thenReturn(expectedStory)
+        `when`(storyRepository.getStory()).thenReturn(expectedStory.asFlow())
+
+        mainViewModel = MainViewModel(storyRepository)
         val actualStory = mainViewModel.story.getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
@@ -54,10 +60,10 @@ class MainViewModelTest {
         differ.submitData(actualStory)
 
         advanceUntilIdle()
-        Mockito.verify(mainViewModel).story
+        Mockito.verify(storyRepository).getStory()
         Assert.assertNotNull(differ.snapshot())
         Assert.assertEquals(dummyStoryItem.size, differ.snapshot().size)
-        Assert.assertEquals(dummyStoryItem[0].name, differ.snapshot()[0]?.name)
+        Assert.assertEquals(dummyStoryItem[0], differ.snapshot()[0])
     }
 
     @Test
@@ -66,7 +72,9 @@ class MainViewModelTest {
         val expectedStory = MutableLiveData<PagingData<StoryItem>>()
         expectedStory.value = dummyEmptyData
 
-        `when`(mainViewModel.story).thenReturn(expectedStory)
+        `when`(storyRepository.getStory()).thenReturn(expectedStory.asFlow())
+
+        mainViewModel = MainViewModel(storyRepository)
         val actualStory = mainViewModel.story.getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
@@ -79,7 +87,7 @@ class MainViewModelTest {
         differ.submitData(actualStory)
 
         advanceUntilIdle()
-        Mockito.verify(mainViewModel).story
+        Mockito.verify(storyRepository).getStory()
         Assert.assertEquals(0, differ.snapshot().size)
     }
 }

@@ -3,7 +3,7 @@ package com.submission.appstory.viewModel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.submission.appstory.paging.dbInjection.Injection
+import com.submission.appstory.paging.Injection
 
 
 class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
